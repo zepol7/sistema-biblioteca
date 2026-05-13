@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         PROJECT_NAME = 'Sistema Biblioteca'
-        PYTHON_CMD   = 'python'
+        PYTHON_CMD   = 'C:\\Users\\helio.lopez_davinci\\AppData\\Local\\Python\\bin\\python.exe'
         TEST_DIR     = 'tests'
         SRC_DIR      = 'src'
     }
@@ -20,7 +20,7 @@ pipeline {
             steps {
                 echo "=== Build #${BUILD_NUMBER} - ${PROJECT_NAME} ==="
                 echo "=== Verificando herramientas instaladas ==="
-                bat 'python --version'
+                bat '%PYTHON_CMD% --version'
                 bat 'pip --version'
                 bat 'git --version'
             }

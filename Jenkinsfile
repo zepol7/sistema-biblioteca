@@ -21,7 +21,7 @@ pipeline {
                 echo "=== Build #${BUILD_NUMBER} - ${PROJECT_NAME} ==="
                 echo "=== Verificando herramientas instaladas ==="
                 bat '%PYTHON_CMD% --version'
-                bat 'pip --version'
+                bat 'python  pip --version'
                 bat 'git --version'
             }
         }
@@ -32,7 +32,7 @@ pipeline {
                 bat 'python -m pip install --upgrade pip'
                 bat '''
                     if exist requirements.txt (
-                        pip install -r requirements.txt
+                        python  pip install -r requirements.txt
                     ) else (
                         echo No hay requirements.txt - continuando
                     )
@@ -43,7 +43,7 @@ pipeline {
         stage('Analisis de Codigo') {
             steps {
                 echo "=== Analizando calidad del codigo ==="
-                bat 'pip install pyflakes --quiet'
+                bat 'python pip install pyflakes --quiet'
                 bat 'python -m pyflakes src/ || exit 0'
             }
         }

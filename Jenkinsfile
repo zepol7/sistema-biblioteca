@@ -18,10 +18,9 @@ pipeline {
 
         stage('Verificar Entorno') {
             steps {
-                echo "=== Build #${BUILD_NUMBER} - ${PROJECT_NAME} ==="
-                echo "=== Verificando herramientas instaladas ==="
-                bat '%PYTHON_CMD% --version'
-                bat '%PYTHON_CMD%  pip --version'
+                echo "=== Verificando herramientas ==="
+                bat '"C:\\Users\\helio.lopez_davinci\\AppData\\Local\\Python\\bin\\python.exe" --version'
+                bat '"C:\\Users\\helio.lopez_davinci\\AppData\\Local\\Python\\bin\\python.exe" -m pip --version'
                 bat 'git --version'
             }
         }
@@ -29,32 +28,24 @@ pipeline {
         stage('Instalar Dependencias') {
             steps {
                 echo "=== Instalando dependencias ==="
-                bat '%PYTHON_CMD% -m pip install --upgrade pip'
-                bat '''
-                    if exist requirements.txt (
-                        %PYTHON_CMD%  pip install -r requirements.txt
-                    ) else (
-                        echo No hay requirements.txt - continuando
-                    )
-                '''
+                bat '"C:\\Users\\helio.lopez_davinci\\AppData\\Local\\Python\\bin\\python.exe" -m pip install --upgrade pip'
+                bat '"C:\\Users\\helio.lopez_davinci\\AppData\\Local\\Python\\bin\\python.exe" -m pip install pyflakes --quiet'
             }
+
+
         }
 
         stage('Analisis de Codigo') {
             steps {
                 echo "=== Analizando calidad del codigo ==="
-                bat '%PYTHON_CMD% pip install pyflakes --quiet'
-                bat '%PYTHON_CMD% -m pyflakes src/ || exit 0'
+                bat '"C:\\Users\\helio.lopez_davinci\\AppData\\Local\\Python\\bin\\python.exe" -m pyflakes src/ || exit 0'                
             }
         }
 
         stage('Ejecutar Pruebas') {
             steps {
                 echo "=== Ejecutando pruebas unitarias ==="
-                bat '''
-                    cd tests
-                    %PYTHON_CMD% test_catalogo.py
-                '''
+                bat 'cd tests && "C:\\Users\\helio.lopez_davinci\\AppData\\Local\\Python\\bin\\python.exe" test_catalogo.py'
             }
             post {
                 success {

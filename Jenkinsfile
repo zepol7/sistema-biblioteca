@@ -21,7 +21,7 @@ pipeline {
                 echo "=== Build #${BUILD_NUMBER} - ${PROJECT_NAME} ==="
                 echo "=== Verificando herramientas instaladas ==="
                 bat '%PYTHON_CMD% --version'
-                bat 'python  pip --version'
+                bat '%PYTHON_CMD%  pip --version'
                 bat 'git --version'
             }
         }
@@ -29,10 +29,10 @@ pipeline {
         stage('Instalar Dependencias') {
             steps {
                 echo "=== Instalando dependencias ==="
-                bat 'python -m pip install --upgrade pip'
+                bat '%PYTHON_CMD% -m pip install --upgrade pip'
                 bat '''
                     if exist requirements.txt (
-                        python  pip install -r requirements.txt
+                        %PYTHON_CMD%  pip install -r requirements.txt
                     ) else (
                         echo No hay requirements.txt - continuando
                     )
@@ -43,8 +43,8 @@ pipeline {
         stage('Analisis de Codigo') {
             steps {
                 echo "=== Analizando calidad del codigo ==="
-                bat 'python pip install pyflakes --quiet'
-                bat 'python -m pyflakes src/ || exit 0'
+                bat '%PYTHON_CMD% pip install pyflakes --quiet'
+                bat '%PYTHON_CMD% -m pyflakes src/ || exit 0'
             }
         }
 
@@ -53,7 +53,7 @@ pipeline {
                 echo "=== Ejecutando pruebas unitarias ==="
                 bat '''
                     cd tests
-                    python test_catalogo.py
+                    %PYTHON_CMD% test_catalogo.py
                 '''
             }
             post {

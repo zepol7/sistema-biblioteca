@@ -2,7 +2,7 @@
 from datetime import datetime, timedelta
 
 class Prestamo:
-    DIAS_PRESTAMO = 7   # versión B: 7 días (política del admin)
+    DIAS_PRESTAMO = 7   # Política institucional: 7 días (aprobado por CCB-2024-05)
 
     def __init__(self, isbn, usuario):
         self.isbn = isbn
@@ -18,4 +18,4 @@ class Prestamo:
         return max(0, delta.days)
     
     def __str__(self):
-        return f"Préstamo: {self.isbn} → {self.usuario} | Vence: {self.fecha_devolucion.date()}"
+        return f"Préstamo: {self.isbn} → {self.usuario} | Vence: {self.fecha_devolucion.date()} | Días restantes: {self.dias_restantes()}"
